@@ -13,12 +13,14 @@ class dbDataset:
         mycursor = self.mydb.cursor()
 
         mycursor.execute("SELECT * FROM " + table)
-
-        data = mycursor.fetchall()
-        return data
+        columns = [col[0] for col in mycursor.description]
+        rows = [dict(zip(columns, row)) for row in mycursor.fetchall()]
+        #data = mycursor.fetchall()
+        return rows
 
 
 db = dbDataset()
 myresult = db.recoverTable("dataset")
-for x in myresult:
-  print(x)
+print(myresult)
+#for x in myresult:
+#  print(x)
